@@ -56,9 +56,13 @@ shinyServer(function(input, output) {
   #pal <- colorFactor(pal = c("#1b9e77", "#d95f02", "#7570b3"), domain = c("Charity", "Government", "Private"))
   
   # create the leaflet map  
+  <script src="http://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+  <script src="js/leaflet-providers.js"></script>
+  
   output$dfss_map <- renderLeaflet({
     leaflet(dfss_data) %>% 
-      addCircles(lng = ~Longitude, lat = ~Latitude) %>% 
+    addProviderTiles(providers$Stamen.Toner)%>% 
+    addCircles(lng = ~Longitude, lat = ~Latitude) %>% 
       addTiles() %>%
       addCircleMarkers(data = dfss_data, lat =  ~Latitude, lng =~Longitude, 
                        radius = 3, popup = ~as.character(cntnt), 
